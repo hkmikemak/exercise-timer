@@ -1,0 +1,45 @@
+{
+  "author": "",
+  "description": "",
+  "keywords": [],
+  "license": "ISC",
+  "main": "index.js",
+  "name": "exercise-timer",
+  "private": true,
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development gulp dev",
+    "build": "cross-env NODE_ENV=production gulp default"
+  },
+  "type": "module",
+  "version": "1.0.0",
+  "devDependencies": {
+    "@fullhuman/postcss-purgecss": "^4.0.3",
+    "@rollup/plugin-commonjs": "^19.0.0",
+    "@rollup/plugin-node-resolve": "^13.0.0",
+    "@rollup/plugin-replace": "^2.4.2",
+    "@rollup/plugin-typescript": "^8.2.1",
+    "@types/react": "^17.0.8",
+    "@types/react-dom": "^17.0.5",
+    "autoprefixer": "^10.2.6",
+    "cross-env": "^7.0.3",
+    "cssnano": "^5.0.5",
+    "del": "^6.0.0",
+    "gulp": "^4.0.2",
+    "gulp-dart-sass": "^1.0.2",
+    "gulp-htmlmin": "^5.0.1",
+    "gulp-postcss": "^9.0.0",
+    "rollup": "^2.50.5",
+    "rollup-plugin-terser": "^7.0.2",
+    "sass": "^1.34.0"
+  },
+  "dependencies": {
+    "bootstrap": "^5.0.1",
+    "bootswatch": "^5.0.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "rxjs": "^7.1.0",
+    "workbox-cacheable-response": "^6.1.5",
+    "workbox-routing": "^6.1.5",
+    "workbox-strategies": "^6.1.5"
+  }
+}
