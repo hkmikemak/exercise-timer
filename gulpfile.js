@@ -1,17 +1,18 @@
-import autoprefixer from "autoprefixer";
+import purgecss from "@fullhuman/postcss-purgecss";
+import alias from "@rollup/plugin-alias";
 import commonjs from "@rollup/plugin-commonjs";
+import nodeResolve from "@rollup/plugin-node-resolve";
+import replace from "@rollup/plugin-replace";
+import typescript from "@rollup/plugin-typescript";
+import autoprefixer from "autoprefixer";
 import cssnano from "cssnano";
 import del from "del";
 import gulp from "gulp";
+import sass from "gulp-dart-sass";
 import htmlmin from "gulp-htmlmin";
-import nodeResolve from "@rollup/plugin-node-resolve";
 import postcss from "gulp-postcss";
 import * as rollup from "rollup";
-import sass from "gulp-dart-sass";
 import { terser } from "rollup-plugin-terser";
-import typescript from "@rollup/plugin-typescript";
-import replace from "@rollup/plugin-replace";
-import purgecss from "@fullhuman/postcss-purgecss";
 
 const isProduction = process.env.NODE_ENV === "production";
 
@@ -41,7 +42,20 @@ const rollupConfig = [
       format: "iife",
       name: "app.js",
     },
-    plugins: [nodeResolve(), replace(replaceOption), commonjs(), typescript(), isProduction && terser(terserOption)],
+    plugins: [
+      alias({
+        entries: [
+          { find: "react/jsx-runtime", replacement: "preact/jsx-runtime" },
+          { find: "react", replacement: "preact/compat" },
+          { find: "react-dom", replacement: "preact/compat" },
+        ],
+      }),
+      nodeResolve(),
+      replace(replaceOption),
+      commonjs(),
+      typescript(),
+      isProduction && terser(terserOption),
+    ],
   },
   {
     input: "./src/service-worker.ts",
@@ -79,7 +93,7 @@ gulp.task("build:css", () =>
 );
 
 gulp.task("build:js", () =>
-  Promise.all(rollupConfig.map((config) => rollup.rollup(config).then((bundle) => bundle.write(config.output))))
+  Promise.all(rollupConfig.map(config => rollup.rollup(config).then(bundle => bundle.write(config.output))))
 );
 
 gulp.task("build:static", () =>
