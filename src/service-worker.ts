@@ -2,6 +2,10 @@ import { CacheableResponsePlugin } from "workbox-cacheable-response";
 import { setDefaultHandler } from "workbox-routing";
 import { NetworkFirst, NetworkOnly } from "workbox-strategies";
 
+declare var self: ServiceWorkerGlobalScope;
+
+self.skipWaiting();
+
 if (process.env.NODE_ENV !== "production") {
   setDefaultHandler(new NetworkOnly());
 } else {

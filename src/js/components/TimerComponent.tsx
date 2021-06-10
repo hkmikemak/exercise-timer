@@ -13,7 +13,7 @@ const TimeComponent: FC<TimeComponentProps> = ({ exerciseDurationInSeconds, rest
   const [countdown, setCountdown] = useState<number>(exerciseDurationInSeconds);
   const [isInExerciseMode, setIsInExerciseMode] = useState<boolean>(true);
   const [displayText, setDisplayText] = useState<string>("");
-  const audio = new Audio("./sounds/mixkit-classic-short-alarm-993.wav");
+  const [audio] = useState<HTMLAudioElement>(new Audio("./sounds/mixkit-classic-short-alarm-993.wav"));
 
   useEffect(() => {
     setCountdown(exerciseDurationInSeconds);
@@ -51,7 +51,7 @@ const TimeComponent: FC<TimeComponentProps> = ({ exerciseDurationInSeconds, rest
   return (
     <>
       <h1>Set {totalSets}</h1>
-      <h1>{isInExerciseMode ? "Exercise" : "Rest"}</h1>
+      <h1>{isInExerciseMode ? "Exercise 🏃" : "Rest 💤"}</h1>
       <div className="font-time">{displayText}</div>
     </>
   );

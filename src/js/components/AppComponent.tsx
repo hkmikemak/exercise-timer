@@ -36,7 +36,9 @@ const AppComponent: FC = () => {
       <footer>
         <div className="d-flex flex-column flex-md-row">
           <div className="flex-grow-1 input-group input-group-sm mb-3 me-md-1">
-            <span className="input-group-text">Exercise Duration</span>
+            <div className="input-group-prepend">
+              <span className="input-group-text">Exercise Duration (s)</span>
+            </div>
             <input
               className="form-control"
               type="number"
@@ -48,7 +50,6 @@ const AppComponent: FC = () => {
               }}
             />
             <div className="input-group-append">
-              <span className="input-group-text">s</span>
               <button
                 className="btn btn-outline-primary"
                 type="button"
@@ -68,7 +69,7 @@ const AppComponent: FC = () => {
             </div>
           </div>
           <div className="flex-grow-1 input-group input-group-sm mb-3 ms-md-1">
-            <span className="input-group-text">Rest Duration</span>
+            <span className="input-group-text">Rest Duration (s)</span>
             <input
               className="form-control"
               type="number"
@@ -80,7 +81,6 @@ const AppComponent: FC = () => {
               }}
             />
             <div className="input-group-append">
-              <span className="input-group-text">s</span>
               <button
                 className="btn btn-outline-primary"
                 type="button"
@@ -101,7 +101,7 @@ const AppComponent: FC = () => {
           </div>
         </div>
         <button
-          className={["btn", "w-100", isPaused ? "btn-primary" : "btn-danger"].join(" ")}
+          className={["btn", "w-100", "mb-3", isPaused ? "btn-primary" : "btn-danger"].join(" ")}
           type="button"
           onClick={() => {
             setIsPaused(oldValue => !oldValue);
