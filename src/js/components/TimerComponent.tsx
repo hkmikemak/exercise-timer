@@ -13,7 +13,29 @@ const TimeComponent: FC<TimeComponentProps> = ({ exerciseDurationInSeconds, rest
   const [countdown, setCountdown] = useState<number>(exerciseDurationInSeconds);
   const [isInExerciseMode, setIsInExerciseMode] = useState<boolean>(true);
   const [displayText, setDisplayText] = useState<string>("");
-  const [audio] = useState<HTMLAudioElement>(new Audio("./sounds/mixkit-classic-short-alarm-993.wav"));
+  const [beeper] = useState<AudioContext>(new AudioContext());
+
+  const beep: (frequency: number, duration: number) => Promise<void> = (frequency, duration) =>
+    new Promise(resolve => {
+      const oscillator = beeper.createOscillator();
+      const gain = beeper.createGain();
+
+      oscillator.connect(gain);
+      gain.connect(beeper.destination);
+      gain.gain.value = 1;
+      oscillator.frequency.value = frequency;
+      oscillator.type = "square";
+      oscillator.start();
+
+      setTimeout(() => {
+        oscillator.stop();
+        resolve();
+      }, duration);
+    });
+
+  const announceSet: (str: string) => void = str => {
+    window.speechSynthesis.speak(new SpeechSynthesisUtterance(str));
+  };
 
   useEffect(() => {
     setCountdown(exerciseDurationInSeconds);
@@ -35,16 +57,24 @@ const TimeComponent: FC<TimeComponentProps> = ({ exerciseDurationInSeconds, rest
   useEffect(() => {
     setDisplayText(new Date(countdown * 1000).toISOString().substr(11, 8));
 
+    if (countdown <= 3 && countdown >= 1) {
+      beep(500, 250);
+    }
+
     if (countdown == 0) {
       if (isInExerciseMode) {
         setCountdown(restDurationInSeconds);
         setIsInExerciseMode(false);
+        beep(1000, 500);
       } else {
+        const nextSet = totalSets + 1;
         setCountdown(exerciseDurationInSeconds);
         setIsInExerciseMode(true);
-        setTotalSets(old => old + 1);
+        setTotalSets(nextSet);
+        beep(1000, 500).then(() => {
+          announceSet(`Set ${nextSet} - Started`);
+        });
       }
-      audio.play();
     }
   }, [countdown]);
 

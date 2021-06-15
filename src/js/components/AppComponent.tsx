@@ -37,7 +37,7 @@ const AppComponent: FC = () => {
         <div className="d-flex flex-column flex-md-row">
           <div className="flex-grow-1 input-group input-group-sm mb-3 me-md-1">
             <div className="input-group-prepend">
-              <span className="input-group-text">Exercise Duration (s)</span>
+              <span className="input-group-text">Exercise Duration 🏃 (s)</span>
             </div>
             <input
               className="form-control"
@@ -69,10 +69,11 @@ const AppComponent: FC = () => {
             </div>
           </div>
           <div className="flex-grow-1 input-group input-group-sm mb-3 ms-md-1">
-            <span className="input-group-text">Rest Duration (s)</span>
+            <span className="input-group-text">Rest Duration 💤 (s)</span>
+            <div className=""></div>
             <input
               className="form-control"
-              type="number"
+              type="range"
               step="1"
               min="1"
               value={restDurationInSeconds}

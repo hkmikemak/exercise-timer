@@ -98,7 +98,7 @@ gulp.task("build:js", () =>
 
 gulp.task("build:static", () =>
   gulp
-    .src(["./src/sounds/**/*", "./src/manifest.json", "./src/img/**/*"], {
+    .src(["./src/manifest.json", "./src/img/**/*"], {
       base: "./src",
       since: gulp.lastRun("build:static"),
     })
@@ -108,11 +108,7 @@ gulp.task("build:static", () =>
 gulp.task("watch", () => {
   gulp.watch("./src/index.html", { ignoreInitial: false }, gulp.series("build:html"));
   gulp.watch("./src/css/**/*.scss", { ignoreInitial: false }, gulp.series("build:css"));
-  gulp.watch(
-    ["./src/sounds/**/*", "./src/manifest.json", "./src/img/**/*"],
-    { ignoreInitial: false },
-    gulp.series("build:static")
-  );
+  gulp.watch(["./src/manifest.json", "./src/img/**/*"], { ignoreInitial: false }, gulp.series("build:static"));
   rollup.watch(rollupConfig);
 });
 
