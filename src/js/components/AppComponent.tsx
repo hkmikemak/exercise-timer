@@ -36,14 +36,12 @@ const AppComponent: FC = () => {
       <footer>
         <div className="d-flex flex-column flex-md-row">
           <div className="flex-grow-1 input-group input-group-sm mb-3 me-md-1">
-            <div className="input-group-prepend">
-              <span className="input-group-text">Exercise Duration 🏃 (s)</span>
-            </div>
+            <span className="input-group-text">Exercise Duration 🏃 (s)</span>
             <input
               className="form-control"
               type="number"
               step="1"
-              min="1"
+              min="10"
               value={exerciseDurationInSeconds}
               onChange={e => {
                 onExerciseDurationChanged(e.target.value);
@@ -70,12 +68,11 @@ const AppComponent: FC = () => {
           </div>
           <div className="flex-grow-1 input-group input-group-sm mb-3 ms-md-1">
             <span className="input-group-text">Rest Duration 💤 (s)</span>
-            <div className=""></div>
             <input
               className="form-control"
-              type="range"
+              type="number"
               step="1"
-              min="1"
+              min="10"
               value={restDurationInSeconds}
               onChange={e => {
                 onRestDurationChanged(e.target.value);
