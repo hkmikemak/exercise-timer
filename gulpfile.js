@@ -109,7 +109,10 @@ gulp.task("watch", () => {
   gulp.watch("./src/index.html", { ignoreInitial: false }, gulp.series("build:html"));
   gulp.watch("./src/css/**/*.scss", { ignoreInitial: false }, gulp.series("build:css"));
   gulp.watch(["./src/manifest.json", "./src/img/**/*"], { ignoreInitial: false }, gulp.series("build:static"));
-  rollup.watch(rollupConfig);
+  const watcher = rollup.watch(rollupConfig);
+  watcher.on("change", () => {
+    console.log("Changed");
+  });
 });
 
 gulp.task("default", gulp.series("clean", gulp.parallel("build:html", "build:js", "build:css", "build:static")));

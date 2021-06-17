@@ -1,6 +1,8 @@
 import { FC, useEffect, useState } from "react";
 import { interval } from "rxjs";
 import { filter } from "rxjs/operators";
+import { beep } from "../helpers/beeper";
+import { speak } from "../helpers/voiceSpeaker";
 
 interface TimeComponentProps {
   exerciseDurationInSeconds: number;
@@ -13,29 +15,6 @@ const TimeComponent: FC<TimeComponentProps> = ({ exerciseDurationInSeconds, rest
   const [countdown, setCountdown] = useState<number>(exerciseDurationInSeconds);
   const [isInExerciseMode, setIsInExerciseMode] = useState<boolean>(true);
   const [displayText, setDisplayText] = useState<string>("");
-  const [beeper] = useState<AudioContext>(new AudioContext());
-
-  const beep: (frequency: number, duration: number) => Promise<void> = (frequency, duration) =>
-    new Promise(resolve => {
-      const oscillator = beeper.createOscillator();
-      const gain = beeper.createGain();
-
-      oscillator.connect(gain);
-      gain.connect(beeper.destination);
-      gain.gain.value = 1;
-      oscillator.frequency.value = frequency;
-      oscillator.type = "square";
-      oscillator.start();
-
-      setTimeout(() => {
-        oscillator.stop();
-        resolve();
-      }, duration);
-    });
-
-  const announceSet: (str: string) => void = str => {
-    window.speechSynthesis.speak(new SpeechSynthesisUtterance(str));
-  };
 
   useEffect(() => {
     setCountdown(exerciseDurationInSeconds);
@@ -58,21 +37,21 @@ const TimeComponent: FC<TimeComponentProps> = ({ exerciseDurationInSeconds, rest
     setDisplayText(new Date(countdown * 1000).toISOString().substr(11, 8));
 
     if (countdown <= 3 && countdown >= 1) {
-      beep(500, 250);
+      beep(500, 200);
     }
 
     if (countdown == 0) {
       if (isInExerciseMode) {
         setCountdown(restDurationInSeconds);
         setIsInExerciseMode(false);
-        beep(1000, 500);
+        beep(1000, 400);
       } else {
         const nextSet = totalSets + 1;
         setCountdown(exerciseDurationInSeconds);
         setIsInExerciseMode(true);
         setTotalSets(nextSet);
-        beep(1000, 500).then(() => {
-          announceSet(`Set ${nextSet} - Started`);
+        beep(1000, 400).then(() => {
+          speak(`Set ${nextSet} - Started`);
         });
       }
     }
