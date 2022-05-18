@@ -2,7 +2,7 @@ import { CacheableResponsePlugin } from "workbox-cacheable-response";
 import { setDefaultHandler } from "workbox-routing";
 import { NetworkFirst, NetworkOnly } from "workbox-strategies";
 
-declare var self: ServiceWorkerGlobalScope;
+declare let self: ServiceWorkerGlobalScope;
 
 self.skipWaiting();
 
