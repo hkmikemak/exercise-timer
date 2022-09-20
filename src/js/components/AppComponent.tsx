@@ -3,8 +3,8 @@ import { TimeComponent } from "./TimerComponent";
 
 const AppComponent: FC = () => {
   const [isPaused, setIsPaused] = useState<boolean>(true);
-  const [exerciseDurationInSeconds, setExerciseDurationInSeconds] = useState<number>(30);
-  const [restDurationInSeconds, setRestDurationInSeconds] = useState<number>(10);
+  const [exerciseDurationInSeconds, setExerciseDurationInSeconds] = useState<number>(60);
+  const [restDurationInSeconds, setRestDurationInSeconds] = useState<number>(15);
 
   const onExerciseDurationChanged = (value: string | number) => {
     const valueNumber = Number(value);

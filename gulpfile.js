@@ -6,7 +6,7 @@ import replace from "@rollup/plugin-replace";
 import typescript from "@rollup/plugin-typescript";
 import autoprefixer from "autoprefixer";
 import cssnano from "cssnano";
-import del from "del";
+import { deleteAsync } from "del";
 import gulp from "gulp";
 import sass from "gulp-dart-sass";
 import htmlmin from "gulp-htmlmin";
@@ -75,7 +75,7 @@ if (isProduction) {
   postcssPlugins.push(purgecss({ content: ["./src/index.html", "./src/js/**/*.tsx"] }));
 }
 
-gulp.task("clean", () => del("./dist"));
+gulp.task("clean", () => deleteAsync("./dist"));
 
 gulp.task("build:html", () =>
   gulp
