@@ -12,7 +12,7 @@ import sass from "gulp-dart-sass";
 import htmlmin from "gulp-htmlmin";
 import postcss from "gulp-postcss";
 import * as rollup from "rollup";
-import { terser } from "rollup-plugin-terser";
+import { terser } from "@el3um4s/rollup-plugin-terser";
 
 const isProduction = process.env.NODE_ENV === "production";
 

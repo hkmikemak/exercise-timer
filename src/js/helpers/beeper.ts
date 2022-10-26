@@ -20,4 +20,12 @@ const beep: (frequency: number, duration: number) => Promise<void> = (frequency,
     });
   });
 
-export { beep };
+const longBeep = async () => {
+  await beep(1000, 400);
+};
+
+const shortBeep = async () => {
+  await beep(500, 200);
+};
+
+export { longBeep, shortBeep };

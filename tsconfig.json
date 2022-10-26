@@ -4,11 +4,18 @@
     "alwaysStrict": true,
     "baseUrl": "src/js",
     "jsx": "react-jsx",
-    "lib": ["DOM", "WebWorker", "ES2020"],
+    "lib": [
+      "DOM",
+      "ES2020",
+      "WebWorker"
+    ],
     "module": "ES2020",
     "moduleResolution": "Node",
     "skipLibCheck": true,
     "target": "ES2020"
   },
-  "files": ["src/js/app.tsx", "src/service-worker.ts"]
+  "files": [
+    "src/js/app.tsx",
+    "src/service-worker.ts"
+  ]
 }
