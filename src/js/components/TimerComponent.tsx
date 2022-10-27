@@ -11,6 +11,7 @@ interface TimeComponentProps {
 }
 
 enum MODE {
+  IDLE,
   COUNTDOWN,
   EXERCISE,
   REST,
@@ -18,17 +19,17 @@ enum MODE {
 
 const TimeComponent: FC<TimeComponentProps> = ({ exerciseDurationInSeconds, restDurationInSeconds, isPaused }) => {
 
-  const COUNTDOWN_DURATION_IN_SECONDS = 3;
+  const COUNTDOWN_DURATION_IN_SECONDS = 5;
 
   const [totalSets, setTotalSets] = useState<number>(1);
   const [countdown, setCountdown] = useState<number>(COUNTDOWN_DURATION_IN_SECONDS);
-  const [mode, setMode] = useState<MODE>(MODE.COUNTDOWN);
+  const [mode, setMode] = useState<MODE>(MODE.IDLE);
   const [displayText, setDisplayText] = useState<string>("");
 
   useEffect(
     () => {
       setCountdown(COUNTDOWN_DURATION_IN_SECONDS);
-      setMode(MODE.COUNTDOWN);
+      setMode(MODE.IDLE);
       setTotalSets(1);
     },
     [
@@ -44,6 +45,10 @@ const TimeComponent: FC<TimeComponentProps> = ({ exerciseDurationInSeconds, rest
         setCountdown(oldValue => oldValue - 1);
       });
 
+      if(mode === MODE.IDLE) {
+        setMode(MODE.COUNTDOWN);
+      }
+
       return () => {
         subscription.unsubscribe();
       };
@@ -57,13 +62,12 @@ const TimeComponent: FC<TimeComponentProps> = ({ exerciseDurationInSeconds, rest
     () => {
       setDisplayText(new Date(countdown * 1000).toISOString().substring(11, 19));
 
-      if (countdown <= 3 && countdown >= 1) {
+      if (mode !== MODE.IDLE && countdown <= 3 && countdown >= 1) {
         shortBeep();
       }
 
       if (countdown == 0) {
-
-        if(mode === MODE.COUNTDOWN) {
+        if (mode === MODE.COUNTDOWN) {
           // Countdown is finished, now move to exercise mode
           setMode(MODE.EXERCISE);
           setCountdown(exerciseDurationInSeconds);
@@ -97,9 +101,9 @@ const TimeComponent: FC<TimeComponentProps> = ({ exerciseDurationInSeconds, rest
 
   return (
     <>
-      <h1>Set {totalSets}</h1>
+      <h1>{mode !== MODE.IDLE ? `Set ${totalSets}` : ""}</h1>
       <h1>{mode === MODE.EXERCISE ? "Exercise 🏃" : mode === MODE.REST ? "Rest 💤" : "Get Ready"}</h1>
-      <div className="font-time">{displayText}</div>
+      <div className="font-time">{mode === MODE.COUNTDOWN ? countdown : mode !== MODE.IDLE ? displayText : ""}</div>
     </>
   );
 };
