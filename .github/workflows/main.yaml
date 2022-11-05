@@ -6,29 +6,23 @@ on:
     branches:
       - "main"
 jobs:
-  job-build:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "🎉 The job was triggered by a ${{ github.event_name }} event."
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
       - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-      - name: Checkout Repo
-        uses: actions/checkout@v3
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: lts/*
-      - name: Install NPM
-        run: npm install
-      - name: Build
-        run: npm run build
-      - name: Upload Page Artifact
-        uses: actions/upload-pages-artifact@v1
+      - run: npm install
+      - run: npm run build
+      - uses: actions/upload-pages-artifact@v1
         with:
           path: dist
-          if-no-files-found: error
-  job-deploy:
-    needs: job-build
+  deploy:
+    needs: build
     runs-on: ubuntu-latest
     permissions:
       pages: write
