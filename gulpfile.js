@@ -1,27 +1,35 @@
-import purgecss from "@fullhuman/postcss-purgecss";
-import alias from "@rollup/plugin-alias";
-import commonjs from "@rollup/plugin-commonjs";
-import nodeResolve from "@rollup/plugin-node-resolve";
-import replace from "@rollup/plugin-replace";
-import typescript from "@rollup/plugin-typescript";
-import autoprefixer from "autoprefixer";
-import cssnano from "cssnano";
 import { deleteAsync } from "del";
-import gulp from "gulp";
-import sass from "gulp-dart-sass";
-import htmlmin from "gulp-htmlmin";
-import postcss from "gulp-postcss";
+import { env } from "node:process";
 import * as rollup from "rollup";
-import { terser } from "@el3um4s/rollup-plugin-terser";
+import alias from "@rollup/plugin-alias";
+import autoprefixer from "autoprefixer";
+import commonjs from "@rollup/plugin-commonjs";
+import cssnano from "cssnano";
+import gulp from "gulp";
+import htmlmin from "gulp-htmlmin";
+import nodeResolve from "@rollup/plugin-node-resolve";
+import postcss from "gulp-postcss";
+import purgecss from "@fullhuman/postcss-purgecss";
+import replace from "@rollup/plugin-replace";
+import sass from "gulp-dart-sass";
+import terser from "@rollup/plugin-terser";
+import typescript from "@rollup/plugin-typescript";
 
-const isProduction = process.env.NODE_ENV === "production";
+const isProduction = env.NODE_ENV === "production";
 
 /** @type { import("rollup-plugin-terser").Options } */
 const terserOption = {
+  compress: {
+    passes: 5,
+    toplevel: true,
+    unsafe: true,
+  },
   ecma: 2020,
   format: {
     comments: false,
     ecma: 2020,
+    quote_style: 1,
+    wrap_iife: true,
   },
 };
 
@@ -29,7 +37,7 @@ const terserOption = {
 const replaceOption = {
   preventAssignment: true,
   values: {
-    "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
+    "process.env.NODE_ENV": JSON.stringify(env.NODE_ENV),
   },
 };
 

@@ -8,7 +8,7 @@ if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("./service-worker.js");
 }
 
-if ('wakeLock' in navigator) {
+if ("wakeLock" in navigator) {
   let wakelock = null;
 
   const requestWakeLock = async () => {
@@ -22,4 +22,10 @@ if ('wakeLock' in navigator) {
       requestWakeLock();
     }
   });
+}
+
+if ("Notification" in window) {
+  if (Notification.permission !== "denied") {
+    Notification.requestPermission();
+  }
 }

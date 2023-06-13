@@ -2,9 +2,10 @@
 @include bsBanner("");
 
 @import "bootstrap/scss/functions";
-
-@import "bootswatch/dist/cyborg/variables";
+$color-mode-type: media-query;
+@import "bootswatch/dist/quartz/variables";
 @import "bootstrap/scss/variables";
+@import "bootstrap/scss/variables-dark";
 
 @import "bootstrap/scss/maps";
 @import "bootstrap/scss/mixins";
