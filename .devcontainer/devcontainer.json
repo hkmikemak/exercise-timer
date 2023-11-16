@@ -1,0 +1,24 @@
+{
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "bierner.markdown-mermaid",
+        "dbaeumer.vscode-eslint",
+        "EditorConfig.EditorConfig",
+        "github.vscode-github-actions",
+        "richie5um2.vscode-sort-json",
+        "ritwickdey.LiveServer",
+        "yzhang.markdown-all-in-one"
+      ]
+    }
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
+  "forwardPorts": [],
+  "name": "Node.js",
+  "postCreateCommand": "npm install"
+}
